@@ -1,0 +1,11 @@
+id,nombre,descripcion,activo,created_at,updated_at
+1,Cemento y Agregados,Cemento portland, arena gruesa y fina, piedra chancada, ladrillos,True,2026-10-01 08:00:00,2026-10-01 08:00:00
+2,Fierros y Aceros,Varillas de construcción, alambre negro, alambre recocido, mallas electrosoldadas,True,2026-10-01 08:00:00,2026-10-01 08:00:00
+3,Herramientas Manuales,"Martillos, combas, picos, palas, llaves, alicates, destornilladores",True,2026-10-01 08:00:00,2026-10-01 08:00:00
+4,Herramientas Eléctricas,"Taladros, amoladoras, sierras circulares, rotomartillos",True,2026-10-01 08:00:00,2026-10-01 08:00:00
+5,Pinturas y Accesorios,"Pinturas latex, esmaltes, imprimantes, brochas, rodillos, thinner",True,2026-10-01 08:00:00,2026-10-01 08:00:00
+6,Gasfitería,"Tubos PVC, conexiones, codos, tees, llaves de paso, grifería",True,2026-10-01 08:00:00,2026-10-01 08:00:00
+7,Electricidad,"Cables eléctricos, interruptores, tomacorrientes, focos LED, cajas térmicas",True,2026-10-01 08:00:00,2026-10-01 08:00:00
+8,Cerrajería,"Chapas, candados, bisagras, aldabas, cerraduras de embutir",True,2026-10-01 08:00:00,2026-10-01 08:00:00
+9,Madera y Accesorios,"Madera tornillo, triplay, MDF, clavos, tornillos, tirafones",True,2026-10-01 08:00:00,2026-10-01 08:00:00
+10,Adhesivos y Selladores,"Pegamentos, silicona, masillas, cintas adhesivas, teflón",True,2026-10-01 08:00:00,2026-10-01 08:00:00

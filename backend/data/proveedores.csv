@@ -1,0 +1,9 @@
+id,ruc,razon_social,nombre_comercial,telefono,email,direccion,contacto_nombre,contacto_telefono,activo,created_at,updated_at
+1,20518520442,Distribuidora Andina SAC,Dist. Andina,015551234,ventas@andina.com.pe,"Av. Argentina 2850, Callao",Roberto Paredes,987654321,True,2026-09-15 09:00:00,2026-09-15 09:00:00
+2,20487562318,Materiales de Construcción Del Norte EIRL,Mat. Del Norte,014445678,info@delnorte.pe,"Jr. Abancay 1234, Lima",Carmen Silva,965432187,True,2026-09-15 09:00:00,2026-09-15 09:00:00
+3,20502145687,Ferretería Industrial Lima SA,Ferre Industrial,013338899,contacto@ferreindustrial.com,"Av. Colonial 456, Lima",Miguel Ángeles,954321876,True,2026-09-15 09:00:00,2026-09-15 09:00:00
+4,20498765432,Aceros y Fierros del Perú SAC,Aceros Perú,016667788,ventas@acerosperu.com.pe,"Av. Venezuela 789, Lima",Luis Ramírez,943218765,True,2026-09-15 09:00:00,2026-09-15 09:00:00
+5,20456789123,Distribuidora de Herramientas Stanley Perú SA,Stanley Perú,015559988,distribuidora@stanley.pe,"Jr. Puno 234, Lima",Ana Torres,932187654,True,2026-09-15 09:00:00,2026-09-15 09:00:00
+6,20523698741,Pinturas y Accesorios Lima EIRL,Pinturas Lima,014447766,ventas@pinturaslima.pe,"Av. Universitaria 567, Lima",Pedro Vargas,921876543,True,2026-09-15 09:00:00,2026-09-15 09:00:00
+7,20487523698,Gasfitería y Electricidad Central SAC,Gasfi-Electric Central,016668877,info@gasficen.com,"Jr. Lampa 890, Lima",Rosa Mendoza,912345678,True,2026-09-15 09:00:00,2026-09-15 09:00:00
+8,20501236987,Maderas Peruanas del Sur SA,Maderas del Sur,015552233,contacto@maderasdelsur.pe,"Av. Grau 345, Lima",Jorge Flores,923456789,True,2026-09-15 09:00:00,2026-09-15 09:00:00

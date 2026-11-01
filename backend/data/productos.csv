@@ -1,0 +1,54 @@
+id,sku,nombre,descripcion,categoria_id,stock_actual,stock_minimo,unidad_medida,costo_unitario,precio_venta,activo,created_at,updated_at
+1,CEM-001,Cemento Andino Tipo I x 42.5 kg,Cemento portland tipo I para construcción general,1,245,50,UND,22.50,28.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+2,CEM-002,Cemento Sol Tipo I x 42.5 kg,Cemento portland tipo I marca Sol,1,180,50,UND,21.80,27.50,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+3,ARE-001,Arena Gruesa x m3,Arena gruesa para concreto y mezclas,1,15,5,M3,45.00,65.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+4,ARE-002,Arena Fina x m3,Arena fina para tarrajeo y acabados,1,12,5,M3,40.00,60.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+5,PIE-001,Piedra Chancada 1/2 x m3,Piedra chancada media pulgada para concreto,1,8,3,M3,55.00,80.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+6,LAD-001,Ladrillo King Kong 18 huecos,Ladrillo para muros portantes 24x13x9 cm,1,3500,500,UND,0.85,1.20,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+7,LAD-002,Ladrillo Pandereta 12x9x24 cm,Ladrillo para tabiquería liviana,1,2800,300,UND,0.65,0.95,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+8,FIE-001,Fierro Corrugado 1/2 x 9m,Varilla de construcción 1/2 pulgada x 9 metros,2,180,30,UND,35.00,45.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+9,FIE-002,Fierro Corrugado 3/8 x 9m,Varilla de construcción 3/8 pulgada x 9 metros,2,220,30,UND,20.50,27.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+10,FIE-003,Fierro Corrugado 5/8 x 9m,Varilla de construcción 5/8 pulgada x 9 metros,2,95,20,UND,52.00,68.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+11,ALA-001,Alambre Negro N° 8 x kg,Alambre negro número 8 para amarre,2,450,80,KG,4.20,6.50,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+12,ALA-002,Alambre Negro N° 16 x kg,Alambre negro número 16 para construcción,2,380,60,KG,4.80,7.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+13,MAR-001,Martillo Uña 16 oz Stanley,Martillo de uña carpintero 16 onzas marca Stanley,3,25,5,UND,28.00,42.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+14,COM-001,Comba 6 libras mango madera,Comba de 6 libras con mango de madera,3,18,5,UND,22.00,35.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+15,PAL-001,Pala Cuchara Bellota mango madera,Pala cuchara marca Bellota con mango de madera,3,32,8,UND,35.00,52.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+16,PIC-001,Pico Punta y Paleta mango madera,Pico con punta y paleta mango madera,3,28,8,UND,32.00,48.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+17,ALI-001,Alicate Universal 8 Stanley,Alicate universal 8 pulgadas marca Stanley,3,15,5,UND,24.00,38.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+18,DES-001,Juego Destornilladores 6 pzas Stanley,Set de 6 destornilladores planos y estrella,3,22,5,UND,32.00,48.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+19,TAL-001,Taladro Percutor 1/2 13mm 600W Bosch,Taladro percutor 600W marca Bosch profesional,4,8,2,UND,285.00,420.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+20,AMO-001,Amoladora 4.5 850W Makita,Amoladora angular 4.5 pulgadas 850W Makita,4,12,3,UND,245.00,360.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+21,SIE-001,Sierra Circular 7.25 1400W Dewalt,Sierra circular 7.25 pulgadas 1400W Dewalt,4,6,2,UND,420.00,590.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+22,ROT-001,Rotomartillo SDS 26mm 800W Bosch,Rotomartillo SDS plus 26mm 800W Bosch,4,5,2,UND,580.00,820.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+23,PIN-001,Pintura Latex Tekno Blanco x 1 gal,Pintura latex interior/exterior color blanco 1 galón,5,85,20,UND,42.00,62.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+24,PIN-002,Pintura Latex Vencedor Blanco x 1 gal,Pintura latex económica blanco 1 galón,5,120,25,UND,35.00,52.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+25,ESM-001,Esmalte Sintético CPP Azul x 1 gal,Esmalte sintético brillante azul 1 galón,5,35,10,UND,48.00,72.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+26,IMP-001,Imprimante Blanco x 1 gal,Imprimante sellador blanco 1 galón,5,45,15,UND,38.00,56.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+27,BRO-001,Brocha 2 pulgadas cerda blanca,Brocha de 2 pulgadas cerda blanca calidad premium,5,65,15,UND,8.50,15.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+28,ROD-001,Rodillo 9 pulgadas felpa media,Rodillo para pintura 9 pulgadas felpa media densidad,5,48,12,UND,12.00,20.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+29,THI-001,Thinner Standard x 1 gal,Thinner estándar para limpieza 1 galón,5,55,15,UND,18.00,28.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+30,TUB-001,Tubo PVC SAP 2 x 5m Clase 10,Tubo PVC sanitario 2 pulgadas x 5 metros,6,120,25,UND,18.50,28.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+31,TUB-002,Tubo PVC SAP 4 x 5m Clase 10,Tubo PVC sanitario 4 pulgadas x 5 metros,6,95,20,UND,45.00,65.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+32,TUB-003,Tubo PVC SAL 1/2 x 5m Clase 10,Tubo PVC agua fría 1/2 pulgada x 5 metros,6,140,30,UND,10.50,16.50,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+33,COD-001,Codo PVC SAP 2 x 90°,Codo PVC sanitario 2 pulgadas 90 grados,6,180,40,UND,2.80,4.50,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+34,TEE-001,Tee PVC SAP 4 x 2,Tee PVC sanitario 4 x 2 pulgadas,6,85,20,UND,8.50,13.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+35,LLA-001,Llave de Paso 1/2 bronce,Llave de paso de bronce 1/2 pulgada,6,45,10,UND,18.00,28.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+36,GRI-001,Grifería Lavatorio Trebol Cromo,Grifería para lavatorio marca Trebol cromada,6,22,5,UND,45.00,75.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+37,CAB-001,Cable THW 14 AWG x metro,Cable eléctrico THW calibre 14 AWG por metro,7,850,150,MT,1.80,3.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+38,CAB-002,Cable THW 12 AWG x metro,Cable eléctrico THW calibre 12 AWG por metro,7,650,120,MT,2.50,4.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+39,INT-001,Interruptor Simple Ticino Blanco,Interruptor simple 10A marca Ticino blanco,7,120,25,UND,4.50,8.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+40,TOM-001,Tomacorriente Doble Ticino Blanco,Tomacorriente doble universal marca Ticino blanco,7,95,20,UND,6.50,11.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+41,FOC-001,Foco LED 9W Luz Blanca E27,Foco LED 9 watts luz blanca rosca E27,7,180,40,UND,8.50,15.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+42,CAJ-001,Caja Térmica 6 polos ABB,Caja térmica para 6 polos marca ABB,7,35,10,UND,22.00,38.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+43,CHA-001,Chapa Exterior Forte 3 golpes,Chapa para puerta exterior 3 golpes marca Forte,8,28,8,UND,45.00,72.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+44,CAN-001,Candado Forte 40mm laminado,Candado de seguridad 40mm laminado marca Forte,8,42,12,UND,18.00,32.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+45,BIS-001,Bisagra Capuchina 3 x 3 acero,Bisagra capuchina 3x3 pulgadas acero,8,150,30,UND,3.50,6.50,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+46,MAD-001,Madera Tornillo 2 x 3 x 3m,Madera tornillo cepillada 2x3 pulgadas x 3 metros,9,85,15,UND,18.00,28.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+47,TRI-001,Triplay Lupuna 4mm 1.22 x 2.44,Triplay de lupuna 4mm 1.22 x 2.44 metros,9,45,10,UND,28.00,45.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+48,CLA-001,Clavos 2.5 x kg,Clavos de 2.5 pulgadas por kilogramo,9,250,50,KG,5.50,9.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+49,TOR-001,Tornillo Drywall 6 x 1 1/4 x 100u,Tornillos para drywall 6 x 1 1/4 caja 100 unidades,9,85,20,CAJA,8.50,14.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+50,PEG-001,Pegamento PVC x 1/4 gal,Pegamento para tubos PVC 1/4 de galón,10,65,15,UND,12.00,20.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+51,SIL-001,Silicona Transparente x 300ml,Silicona transparente uso general 300ml,10,95,20,UND,8.50,14.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+52,MAS-001,Masilla Muro Umahon x 4kg,Masilla para muros y techos Umahon 4 kilos,10,55,15,UND,15.00,24.00,True,2026-10-01 08:00:00,2026-10-31 14:30:00
+53,TEF-001,Cinta Teflón 1/2 x 10m,Cinta teflón 1/2 pulgada x 10 metros,10,180,40,UND,1.20,2.50,True,2026-10-01 08:00:00,2026-10-31 14:30:00

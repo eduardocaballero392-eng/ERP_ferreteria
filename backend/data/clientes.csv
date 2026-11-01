@@ -1,0 +1,16 @@
+id,tipo_documento,numero_documento,nombre,apellido,razon_social,telefono,email,direccion,limite_credito,saldo_por_cobrar,activo,created_at,updated_at
+1,DNI,45678912,Juan,Pérez Gómez,,987456123,juan.perez@gmail.com,"Jr. Los Olivos 234, San Juan de Lurigancho",2000.00,850.00,True,2026-09-20 10:00:00,2026-10-31 16:45:00
+2,RUC,20587456321,,,Constructora Los Andes SAC,016667788,ventas@losandes.pe,"Av. Javier Prado 4567, San Isidro",15000.00,8500.00,True,2026-09-20 10:00:00,2026-10-31 16:45:00
+3,DNI,78945612,María,Rodríguez Torres,,965874123,mrodriguez@hotmail.com,"Av. Los Próceres 567, Surco",3000.00,1200.00,True,2026-09-22 11:00:00,2026-10-31 16:45:00
+4,RUC,20456987321,,,Inversiones Inmobiliarias Del Este EIRL,014558899,contacto@inmobiliariaeste.com,"Jr. Lampa 890, Lima Centro",20000.00,12500.00,True,2026-09-22 11:00:00,2026-10-31 16:45:00
+5,DNI,65432178,Carlos,Mendoza Silva,,954789632,cmendoza@yahoo.com,"Calle Las Flores 123, Los Olivos",1500.00,450.00,True,2026-09-25 14:00:00,2026-10-31 16:45:00
+6,DNI,87965432,Ana,López Vargas,,932145687,analopez@gmail.com,"Av. Angamos 345, Miraflores",2500.00,0.00,True,2026-09-28 15:00:00,2026-10-31 16:45:00
+7,RUC,20512369874,,,Obras y Servicios Generales SAC,015789456,obras@osgenerales.pe,"Av. Industrial 234, Ate",10000.00,4800.00,True,2026-09-28 15:00:00,2026-10-31 16:45:00
+8,DNI,56789432,Roberto,Sánchez Díaz,,976543218,rsanchez@outlook.com,"Jr. Huancayo 567, Breña",1800.00,920.00,True,2026-10-01 09:00:00,2026-10-31 16:45:00
+9,DNI,43217856,Luisa,Fernández Rojas,,945678321,lfernandez@gmail.com,"Av. Brasil 789, Pueblo Libre",2200.00,650.00,True,2026-10-03 10:00:00,2026-10-31 16:45:00
+10,RUC,20478965123,,,Constructora Vial del Norte SA,016554433,constructora@vialnorte.pe,"Av. Túpac Amaru 1234, Independencia",25000.00,18200.00,True,2026-10-05 11:00:00,2026-10-31 16:45:00
+11,DNI,78965412,Pedro,Gutiérrez Campos,,987321654,pgutierrez@hotmail.com,"Calle Los Pinos 456, San Miguel",1200.00,380.00,True,2026-10-08 13:00:00,2026-10-31 16:45:00
+12,DNI,65478932,Carmen,Torres Villanueva,,954123678,ctorres@gmail.com,"Av. Universitaria 890, Los Olivos",1600.00,0.00,True,2026-10-10 14:00:00,2026-10-31 16:45:00
+13,RUC,20589632147,,,Desarrollos Urbanos La Victoria EIRL,014669988,contacto@devlavictoria.com,"Jr. Grau 567, La Victoria",8000.00,3450.00,True,2026-10-12 09:00:00,2026-10-31 16:45:00
+14,DNI,89632147,Miguel,Ramírez Castro,,932456789,mramirez@yahoo.com,"Av. Aviación 234, San Borja",2800.00,1100.00,True,2026-10-15 10:00:00,2026-10-31 16:45:00
+15,DNI,74185296,Rosa,Martínez Huamán,,921456789,rmartinez@outlook.com,"Jr. Junín 678, Lima Centro",1400.00,520.00,True,2026-10-18 11:00:00,2026-10-31 16:45:00

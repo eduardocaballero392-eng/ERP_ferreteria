@@ -1,0 +1,4 @@
+id,numero_recibo,cliente_id,fecha,monto,metodo_pago,referencia,observaciones,created_at,updated_at
+1,REC-001,6,2026-10-22 11:00:00,767.00,TRANSFERENCIA,OP-458796325,Pago total de boleta B001-00004,2026-10-22 11:00:00,2026-10-22 11:00:00
+2,REC-002,5,2026-10-18 10:00:00,377.60,EFECTIVO,,Pago en efectivo boleta B001-00003,2026-10-18 10:00:00,2026-10-18 10:00:00
+3,REC-003,11,2026-10-31 11:00:00,330.40,EFECTIVO,,Pago completo boleta B001-00007,2026-10-31 11:00:00,2026-10-31 11:00:00
