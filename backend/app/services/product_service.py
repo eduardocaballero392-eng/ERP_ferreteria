@@ -232,6 +232,21 @@ class ProductService:
         # TODO: Registrar en movimientos_inventario con tipo AJUSTE
         
         return self.get_product_by_id(product_id)
+
+    def clear_all_stock(self) -> dict:
+        """Vacía las existencias sin eliminar los productos del catálogo."""
+        try:
+            result = self.product_repo.clear_all_stock()
+        except OSError as error:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="No se pudo guardar el inventario vacío",
+            ) from error
+
+        return {
+            "message": "El stock de todos los productos quedó en cero",
+            **result,
+        }
     
     def delete_product(self, product_id: int) -> dict:
         """Elimina (desactiva) un producto"""

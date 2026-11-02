@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
-import { ArrowDownToLine, Boxes, FileSpreadsheet, Package, Plus, Search, Tag, UploadCloud } from 'lucide-react'
+import { ArrowDownToLine, Boxes, FileSpreadsheet, Package, Plus, Search, Tag, Trash2, UploadCloud } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { productService, categoryService, reportService, uploadService } from '@/api'
 import { Badge, Button, Card, Loading, Modal } from '@/components/common'
 import { formatCurrency } from '@/utils'
+import { useAuth } from '@/context/useAuth'
 
 const stockState = (product) => Number(product.stock_actual) <= 0 ? 'AGOTADO' : Number(product.stock_actual) <= Number(product.stock_minimo) ? 'REPONER' : 'OK'
 
 export const InventoryPage = () => {
+  const { user } = useAuth()
   const [products, setProducts] = useState([])
   const [searchParams] = useSearchParams()
   const [categories, setCategories] = useState([])
@@ -25,6 +27,7 @@ export const InventoryPage = () => {
   const [movementProductId, setMovementProductId] = useState('')
   const [movementReport, setMovementReport] = useState(null)
   const [movementLoading, setMovementLoading] = useState(false)
+  const [clearingStock, setClearingStock] = useState(false)
   const inputRef = useRef(null)
   const location = useLocation()
 
@@ -110,6 +113,23 @@ export const InventoryPage = () => {
     }
   }
 
+  const clearAllStock = async () => {
+    const totalUnits = products.reduce((sum, product) => sum + Number(product.stock_actual || 0), 0)
+    const confirmed = window.confirm(`Se pondrá en cero el stock de todos los productos (${totalUnits.toLocaleString('es-PE')} unidades). Los productos seguirán en el catálogo. ¿Deseas continuar?`)
+    if (!confirmed) return
+
+    setClearingStock(true)
+    try {
+      const result = await productService.clearAllStock()
+      toast.success(`Stock limpiado: ${result.products_updated} productos · ${result.units_removed.toLocaleString('es-PE')} unidades`)
+      await loadData()
+    } catch (error) {
+      toast.error(error.response?.data?.detail || error.message || 'No se pudo limpiar el stock')
+    } finally {
+      setClearingStock(false)
+    }
+  }
+
   const totals = products.reduce((sum, product) => {
     const state = stockState(product)
     sum.units += Number(product.stock_actual) || 0
@@ -125,7 +145,7 @@ export const InventoryPage = () => {
   return <div className="mx-auto max-w-7xl space-y-6">
     <header className="flex flex-wrap items-end justify-between gap-4">
       <div><p className="text-xs font-semibold uppercase tracking-[.18em] text-primary-600">Almacén · catálogo conectado</p><h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">{title}</h1><p className="mt-1 text-sm text-slate-500">El mismo stock alimenta ventas, compras y reportes.</p></div>
-      <div className="flex flex-wrap gap-2"><Button onClick={() => setShowNewProduct(true)}><Plus className="h-4 w-4" />Nuevo producto</Button><Link to="/purchases/new" className="btn btn-secondary"><ArrowDownToLine className="h-4 w-4" />Registrar ingreso</Link></div>
+      <div className="flex flex-wrap gap-2"><Button onClick={() => setShowNewProduct(true)}><Plus className="h-4 w-4" />Nuevo producto</Button><Link to="/purchases/new" className="btn btn-secondary"><ArrowDownToLine className="h-4 w-4" />Registrar ingreso</Link>{(user?.role ?? user?.rol) === 'admin' && <Button variant="danger" onClick={clearAllStock} loading={clearingStock} disabled={!products.some((product) => Number(product.stock_actual) > 0)}><Trash2 className="h-4 w-4" />Limpiar stock</Button>}</div>
     </header>
 
     <div className="grid gap-4 sm:grid-cols-3">

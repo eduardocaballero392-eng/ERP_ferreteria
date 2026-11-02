@@ -75,6 +75,11 @@ export const productService = {
     return response.data
   },
 
+  async clearAllStock() {
+    const response = await apiClient.post(API_ENDPOINTS.PRODUCTS.CLEAR_STOCK)
+    return response.data
+  },
+
   /**
    * Eliminar producto
    */

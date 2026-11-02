@@ -107,6 +107,14 @@ async def create_product(
     return product_service.create_product(product_data)
 
 
+@router.post("/clear-stock", summary="Poner todo el stock en cero")
+async def clear_all_stock(
+    current_user: UserResponse = Depends(require_role(["admin"]))
+):
+    """Pone las existencias de todos los productos en cero. Solo para administradores."""
+    return product_service.clear_all_stock()
+
+
 @router.put("/{product_id}", response_model=ProductResponse, summary="Actualizar producto")
 async def update_product(
     product_id: int,

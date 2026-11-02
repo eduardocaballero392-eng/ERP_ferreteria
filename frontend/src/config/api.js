@@ -36,6 +36,7 @@ export const API_ENDPOINTS = {
   // Products
   PRODUCTS: {
     LIST: '/products/',
+    CLEAR_STOCK: '/products/clear-stock',
     DETAILS: '/products/details',
     LOW_STOCK: '/products/low-stock',
     SEARCH: '/products/search',

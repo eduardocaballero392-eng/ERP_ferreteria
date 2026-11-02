@@ -123,6 +123,30 @@ class ProductRepository:
             "updated_at": datetime.now().isoformat()
         })
 
+    def clear_all_stock(self) -> Dict[str, int]:
+        """Pone el stock de todos los productos en cero en una sola escritura."""
+        from datetime import datetime
+
+        with self.csv_handler._lock:
+            products = self.csv_handler.read_all()
+            affected = 0
+            units_removed = 0
+            timestamp = datetime.now().isoformat()
+
+            for product in products:
+                current_stock = int(float(product.get("stock_actual") or 0))
+                if current_stock <= 0:
+                    continue
+                units_removed += current_stock
+                affected += 1
+                product["stock_actual"] = 0
+                product["updated_at"] = timestamp
+
+            if affected and not self.csv_handler.write_all(products):
+                raise OSError("No se pudo guardar el inventario actualizado")
+
+            return {"products_updated": affected, "units_removed": units_removed}
+
 
 # Singleton
 product_repository = ProductRepository()
