@@ -57,29 +57,29 @@ export const Navbar = ({ onMenuClick }) => {
   ].find(([path]) => location.pathname.startsWith(path))?.[1] || 'Panel'
 
   return (
-    <nav className="bg-white/95 border-b border-slate-200/80 fixed w-full z-30 top-0 backdrop-blur-xl shadow-[0_2px_12px_rgba(15,23,42,0.04)]">
+    <nav className="fixed top-0 z-30 w-full border-b border-slate-800 bg-[#0b1220] text-white shadow-[0_8px_24px_rgba(2,6,23,0.18)]">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo y menú hamburguesa */}
           <div className="flex items-center">
             <button
               onClick={onMenuClick}
-              className="p-2 rounded-lg hover:bg-gray-100 lg:hidden"
+              className="rounded-lg p-2 text-slate-300 transition hover:bg-white/10 hover:text-white lg:hidden"
               aria-label="Abrir menú de navegación"
             >
               <Menu className="h-6 w-6" />
             </button>
             <div className="flex items-center ml-4">
-              <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-sm font-extrabold tracking-tight text-white shadow-lg shadow-blue-900/20">EF</div><div><h1 className="text-[15px] font-extrabold leading-tight tracking-tight text-slate-900">ERP Ferretería</h1><p className="mt-0.5 text-[10px] font-bold uppercase tracking-[.16em] text-slate-400">Gestión integrada</p></div></div>
+              <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-sm font-extrabold tracking-tight text-white shadow-lg shadow-blue-950/40">EF</div><div><h1 className="text-[15px] font-extrabold leading-tight tracking-tight text-white">ERP Ferretería</h1><p className="mt-0.5 text-[10px] font-bold uppercase tracking-[.16em] text-slate-400">Gestión integrada</p></div></div>
             </div>
           </div>
 
-          <div className="hidden items-center gap-2 text-sm xl:flex"><span className="text-slate-400">Espacio de trabajo</span><span className="text-slate-300">/</span><span className="font-semibold text-slate-700">{currentPage}</span></div>
+          <div className="hidden items-center gap-2 text-sm xl:flex"><span className="text-slate-500">Espacio de trabajo</span><span className="text-slate-600">/</span><span className="font-semibold text-slate-100">{currentPage}</span></div>
 
           {/* Usuario */}
           <div className="flex items-center gap-4">
             <div className="hidden md:block text-right">
-              <p className="max-w-48 truncate text-sm font-semibold text-slate-800">
+              <p className="max-w-48 truncate text-sm font-semibold text-slate-100">
                 {user?.nombre_completo || [user?.nombre, user?.apellido].filter(Boolean).join(' ')}
               </p>
               <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
