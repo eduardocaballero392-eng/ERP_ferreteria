@@ -9,6 +9,9 @@
     "preview": "vite preview",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
   },
+  "allowScripts": {
+    "esbuild@0.21.5": true
+  },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
