@@ -11,6 +11,7 @@ from app.schemas.product import (
 )
 from app.repositories.product_repository import product_repository
 from app.repositories.category_repository import category_repository
+from app.repositories.purchase_repository import purchase_repository
 from app.core.utils import obtener_estado_stock
 
 
@@ -20,6 +21,7 @@ class ProductService:
     def __init__(self):
         self.product_repo = product_repository
         self.category_repo = category_repository
+        self.purchase_repo = purchase_repository
     
     def get_all_products(self, include_inactive: bool = False) -> List[ProductResponse]:
         """Obtiene todos los productos"""
@@ -29,6 +31,7 @@ class ProductService:
     def get_products_with_details(self) -> List[ProductWithDetails]:
         """Obtiene productos con detalles adicionales"""
         products = self.product_repo.find_all()
+        replenished_product_ids = self.purchase_repo.get_replenished_product_ids()
         result = []
         
         for prod in products:
@@ -50,7 +53,8 @@ class ProductService:
                 'estado_stock': estado_stock,
                 'valor_inventario': round(valor_inventario, 2),
                 'margen_utilidad': round(margen_utilidad, 2),
-                'categoria_nombre': category.get('nombre') if category else None
+                'categoria_nombre': category.get('nombre') if category else None,
+                'origen_inventario': 'REPUESTO' if int(prod['id']) in replenished_product_ids else 'AGREGADO'
             }
             result.append(ProductWithDetails(**prod_with_details))
         
@@ -80,7 +84,8 @@ class ProductService:
             'estado_stock': obtener_estado_stock(stock_actual, stock_minimo),
             'valor_inventario': round(stock_actual * costo, 2),
             'margen_utilidad': round(((precio - costo) / precio * 100) if precio > 0 else 0, 2),
-            'categoria_nombre': category.get('nombre') if category else None
+            'categoria_nombre': category.get('nombre') if category else None,
+            'origen_inventario': 'REPUESTO' if product_id in self.purchase_repo.get_replenished_product_ids() else 'AGREGADO'
         }
         
         return ProductWithDetails(**product_with_details)
@@ -89,6 +94,7 @@ class ProductService:
         """Busca y filtra productos"""
         filter_dict = filters.model_dump(exclude_unset=True)
         products = self.product_repo.filter_products(filter_dict)
+        replenished_product_ids = self.purchase_repo.get_replenished_product_ids()
         
         # Agregar detalles
         result = []
@@ -105,7 +111,8 @@ class ProductService:
                 'estado_stock': obtener_estado_stock(stock_actual, stock_minimo),
                 'valor_inventario': round(stock_actual * costo, 2),
                 'margen_utilidad': round(((precio - costo) / precio * 100) if precio > 0 else 0, 2),
-                'categoria_nombre': category.get('nombre') if category else None
+                'categoria_nombre': category.get('nombre') if category else None,
+                'origen_inventario': 'REPUESTO' if int(prod['id']) in replenished_product_ids else 'AGREGADO'
             }
             result.append(ProductWithDetails(**prod_with_details))
         

@@ -20,7 +20,7 @@ import {
   customerService,
   productService,
 } from '@/api'
-import { formatCurrency, formatDate } from '@/utils'
+import { downloadCsv, formatCurrency, formatDate } from '@/utils'
 import { useAuth } from '@/context/useAuth'
 import {
   Plus,
@@ -28,6 +28,7 @@ import {
   Eye,
   XCircle,
   Trash2,
+  Download,
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 
@@ -259,6 +260,36 @@ export const SalesPage = () => {
       sale.cliente_nombre?.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  const exportSalesCsv = () => {
+    const headers = [
+      'Comprobante',
+      'Fecha',
+      'Cliente',
+      'Documento del cliente',
+      'Tipo de comprobante',
+      'Condición de pago',
+      'Subtotal',
+      'IGV',
+      'Total',
+      'Estado',
+      'Observaciones',
+    ]
+    const rows = filteredSales.map((sale) => [
+      sale.numero_comprobante,
+      sale.fecha,
+      sale.cliente_nombre,
+      sale.cliente_documento,
+      sale.tipo_comprobante,
+      sale.condicion_pago,
+      sale.subtotal,
+      sale.igv,
+      sale.total,
+      sale.estado,
+      sale.observaciones,
+    ])
+    downloadCsv(headers, rows, 'ventas.csv')
+  }
+
   const totals = calculateTotal()
 
   if (loading) {
@@ -286,12 +317,18 @@ export const SalesPage = () => {
       <Card className="overflow-hidden p-0">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 bg-slate-50/60 px-5 py-4">
           <div><h2 className="text-sm font-bold text-slate-800">Registro de ventas</h2><p className="mt-0.5 text-xs text-slate-500">Revisa estado, cliente y detalle de cada comprobante.</p></div>
-          <SearchBar
-            value={searchTerm}
-            onChange={setSearchTerm}
-            placeholder="Buscar por número de comprobante o cliente..."
-            className="w-full sm:max-w-sm"
-          />
+          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+            <SearchBar
+              value={searchTerm}
+              onChange={setSearchTerm}
+              placeholder="Buscar por número de comprobante o cliente..."
+              className="w-full sm:max-w-sm"
+            />
+            <Button variant="secondary" onClick={exportSalesCsv} disabled={!filteredSales.length}>
+              <Download className="h-4 w-4" />
+              Exportar CSV
+            </Button>
+          </div>
         </div>
 
         {filteredSales.length === 0 ? (

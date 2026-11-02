@@ -92,6 +92,7 @@ class ProductWithDetails(ProductResponse):
     valor_inventario: Decimal = Field(..., description="stock_actual * costo_unitario")
     margen_utilidad: Decimal = Field(..., description="Porcentaje de utilidad")
     categoria_nombre: Optional[str] = Field(None, description="Nombre de la categoría")
+    origen_inventario: str = Field("AGREGADO", description="AGREGADO o REPUESTO")
 
 
 class ProductStockAdjust(BaseModel):

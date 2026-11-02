@@ -32,6 +32,20 @@ class PurchaseRepository:
     def get_details(self, purchase_id: int) -> List[Dict[str, Any]]:
         """Obtiene los detalles de una compra"""
         return self.detail_handler.filter({"compra_id": purchase_id})
+
+    def get_replenished_product_ids(self) -> set[int]:
+        """Obtiene los productos incluidos en compras completadas."""
+        completed_purchase_ids = {
+            str(purchase.get("id"))
+            for purchase in self.find_all()
+            if purchase.get("estado") == "COMPLETADA"
+        }
+        return {
+            int(float(detail["producto_id"]))
+            for detail in self.detail_handler.read_all()
+            if str(detail.get("compra_id")) in completed_purchase_ids
+            and int(float(detail.get("cantidad") or 0)) > 0
+        }
     
     def create(self, purchase_data: Dict[str, Any]) -> Dict[str, Any]:
         """Crea una nueva compra"""

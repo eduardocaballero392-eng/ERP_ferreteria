@@ -18,6 +18,7 @@ export const InventoryPage = () => {
   const [query, setQuery] = useState('')
   const [categoryId, setCategoryId] = useState(() => searchParams.get('categoria') || '')
   const [status, setStatus] = useState('')
+  const [inventoryOrigin, setInventoryOrigin] = useState('')
   const [file, setFile] = useState(null)
   const [uploading, setUploading] = useState(false)
   const [dragging, setDragging] = useState(false)
@@ -49,8 +50,8 @@ export const InventoryPage = () => {
   const filtered = useMemo(() => products.filter((product) => {
     const search = query.trim().toLowerCase()
     const matchesText = !search || [product.nombre, product.sku, product.categoria_nombre].some((value) => String(value || '').toLowerCase().includes(search))
-    return matchesText && (!categoryId || String(product.categoria_id) === categoryId) && (!status || stockState(product) === status)
-  }), [products, query, categoryId, status])
+    return matchesText && (!categoryId || String(product.categoria_id) === categoryId) && (!status || stockState(product) === status) && (!inventoryOrigin || product.origen_inventario === inventoryOrigin)
+  }), [products, query, categoryId, status, inventoryOrigin])
 
   const handleUpload = async () => {
     if (!file) return
@@ -172,6 +173,7 @@ export const InventoryPage = () => {
         <label className="relative min-w-0 flex-1"><Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" /><input className="input pl-9" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar producto, código o categoría" /></label>
         <select className="input md:w-52" value={categoryId} onChange={(event) => setCategoryId(event.target.value)}><option value="">Todas las categorías</option>{categories.map((category) => <option key={category.id} value={category.id}>{category.nombre}</option>)}</select>
         <select className="input md:w-44" value={status} onChange={(event) => setStatus(event.target.value)}><option value="">Todos los estados</option><option value="OK">Disponible</option><option value="REPONER">Por reponer</option><option value="AGOTADO">Agotado</option></select>
+        <select className="input md:w-52" value={inventoryOrigin} onChange={(event) => setInventoryOrigin(event.target.value)}><option value="">Todos los tipos</option><option value="REPUESTO">Productos repuestos</option><option value="AGREGADO">Productos agregados</option></select>
         <Link to="/inventory/categories" className="btn btn-secondary whitespace-nowrap"><Tag className="h-4 w-4" />Categorías</Link>
       </div>
       <div className="overflow-x-auto"><table className="table"><thead><tr><th>Producto</th><th>Categoría</th><th>Existencia</th><th>Estado</th><th>Precio</th><th>Valor en almacén</th><th>Acciones</th></tr></thead><tbody>
