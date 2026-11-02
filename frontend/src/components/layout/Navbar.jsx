@@ -3,6 +3,7 @@
  */
 
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Menu, LogOut, User, Key } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useAuth } from '@/context/useAuth'
@@ -13,6 +14,7 @@ import { Button, Modal } from '@/components/common'
 
 export const Navbar = ({ onMenuClick }) => {
   const { user, logout } = useAuth()
+  const location = useLocation()
   const [showDropdown, setShowDropdown] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const [passwordOpen, setPasswordOpen] = useState(false)
@@ -40,6 +42,20 @@ export const Navbar = ({ onMenuClick }) => {
     }
   }
 
+  const currentPage = [
+    ['/inventory/categories', 'Categorías'], ['/inventory/movements', 'Movimientos'],
+    ['/inventory/adjustments', 'Ajustes de stock'], ['/inventory', 'Inventario'],
+    ['/sales/new', 'Nueva venta'], ['/sales/quotes', 'Cotizaciones'],
+    ['/sales/receivables', 'Ventas a crédito'], ['/sales', 'Ventas'],
+    ['/purchases/new', 'Nueva compra'], ['/purchases/suppliers', 'Proveedores'],
+    ['/purchases/payables', 'Cuentas por pagar'], ['/purchases', 'Compras'],
+    ['/customers', 'Clientes'], ['/employees/sellers', 'Vendedores'],
+    ['/employees/warehouse', 'Almaceneros'], ['/employees', 'Empleados'],
+    ['/reports/sales', 'Ventas por período'], ['/reports/inventory', 'Inventario valorizado'],
+    ['/reports/profitability', 'Rentabilidad'], ['/reports', 'Reportes'],
+    ['/dashboard', 'Resumen ejecutivo'],
+  ].find(([path]) => location.pathname.startsWith(path))?.[1] || 'Panel'
+
   return (
     <nav className="bg-white/95 border-b border-slate-200/80 fixed w-full z-30 top-0 backdrop-blur-xl shadow-[0_2px_12px_rgba(15,23,42,0.04)]">
       <div className="px-4 sm:px-6 lg:px-8">
@@ -49,6 +65,7 @@ export const Navbar = ({ onMenuClick }) => {
             <button
               onClick={onMenuClick}
               className="p-2 rounded-lg hover:bg-gray-100 lg:hidden"
+              aria-label="Abrir menú de navegación"
             >
               <Menu className="h-6 w-6" />
             </button>
@@ -57,13 +74,15 @@ export const Navbar = ({ onMenuClick }) => {
             </div>
           </div>
 
+          <div className="hidden items-center gap-2 text-sm xl:flex"><span className="text-slate-400">Espacio de trabajo</span><span className="text-slate-300">/</span><span className="font-semibold text-slate-700">{currentPage}</span></div>
+
           {/* Usuario */}
           <div className="flex items-center gap-4">
             <div className="hidden md:block text-right">
-              <p className="text-sm font-medium text-gray-900">
+              <p className="max-w-48 truncate text-sm font-semibold text-slate-800">
                 {user?.nombre_completo || [user?.nombre, user?.apellido].filter(Boolean).join(' ')}
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
                 {ROLE_NAMES[user?.role ?? user?.rol] || user?.role || user?.rol}
               </p>
             </div>

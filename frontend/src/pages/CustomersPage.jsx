@@ -132,25 +132,26 @@ export const CustomersPage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Clientes</h1>
-          <p className="text-gray-500 mt-1">
-            {customers.length} clientes registrados
-          </p>
+          <p className="text-xs font-bold uppercase tracking-[.16em] text-primary-600">Relaciones comerciales</p>
+          <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-slate-900">Clientes</h1>
+          <p className="mt-1 text-sm text-slate-500">{customers.length} clientes registrados · historial y capacidad de crédito</p>
         </div>
-        <Button onClick={() => setShowModal(true)}>
+        <Button onClick={() => setShowModal(true)} className="shrink-0">
           <Plus className="h-4 w-4" />
-          Nuevo Cliente
+          Nuevo cliente
         </Button>
-      </div>
+      </header>
 
-      <Card>
-        <div className="mb-4">
+      <Card className="overflow-hidden p-0">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 bg-slate-50/60 px-5 py-4">
+          <div><h2 className="text-sm font-bold text-slate-800">Directorio de clientes</h2><p className="mt-0.5 text-xs text-slate-500">Consulta documentos, contacto y crédito disponible.</p></div>
           <SearchBar
             value={searchTerm}
             onChange={setSearchTerm}
             placeholder="Buscar por nombre o documento..."
+            className="w-full sm:max-w-xs"
           />
         </div>
 

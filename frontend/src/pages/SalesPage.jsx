@@ -271,23 +271,26 @@ export const SalesPage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{location.pathname.endsWith('/receivables') ? 'Ventas a crédito' : location.pathname.endsWith('/quotes') ? 'Cotizaciones' : 'Ventas'}</h1>
-          <p className="text-gray-500 mt-1">{visibleSales.length} {location.pathname.endsWith('/receivables') ? 'ventas a crédito activas' : 'ventas registradas'}</p>
+          <p className="text-xs font-bold uppercase tracking-[.16em] text-primary-600">Gestión comercial</p>
+          <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-slate-900">{location.pathname.endsWith('/receivables') ? 'Ventas a crédito' : location.pathname.endsWith('/quotes') ? 'Cotizaciones' : 'Ventas'}</h1>
+          <p className="mt-1 text-sm text-slate-500">{visibleSales.length} {location.pathname.endsWith('/receivables') ? 'ventas a crédito activas' : 'ventas registradas'} · comprobantes y atención al cliente</p>
         </div>
-        <Button onClick={() => setShowModal(true)}>
+        <Button onClick={() => setShowModal(true)} className="shrink-0">
           <Plus className="h-4 w-4" />
-          Nueva Venta
+          Nueva venta
         </Button>
-      </div>
+      </header>
 
-      <Card>
-        <div className="mb-4">
+      <Card className="overflow-hidden p-0">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 bg-slate-50/60 px-5 py-4">
+          <div><h2 className="text-sm font-bold text-slate-800">Registro de ventas</h2><p className="mt-0.5 text-xs text-slate-500">Revisa estado, cliente y detalle de cada comprobante.</p></div>
           <SearchBar
             value={searchTerm}
             onChange={setSearchTerm}
             placeholder="Buscar por número de comprobante o cliente..."
+            className="w-full sm:max-w-sm"
           />
         </div>
 

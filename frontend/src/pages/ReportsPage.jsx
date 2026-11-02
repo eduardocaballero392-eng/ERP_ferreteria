@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Download, RefreshCw, TrendingUp } from 'lucide-react'
 import { reportService } from '@/api'
@@ -8,20 +8,21 @@ import { formatCurrency, formatDate } from '@/utils'
 const Table = ({ title, headers, rows }) => <Card className="border-0 p-0 shadow-sm"><div className="border-b border-slate-100 p-5"><h2 className="font-semibold text-slate-900">{title}</h2><p className="mt-1 text-xs text-slate-500">{rows.length} registros</p></div><div className="overflow-x-auto"><table className="table"><thead><tr>{headers.map(h => <th key={h}>{h}</th>)}</tr></thead><tbody>{rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j}>{cell}</td>)}</tr>)}{!rows.length && <tr><td colSpan={headers.length} className="py-10 text-center text-slate-500">No hay datos para mostrar.</td></tr>}</tbody></table></div></Card>
 const Metric = ({ label, value }) => <Card className="border-0 shadow-sm"><p className="text-sm text-slate-500">{label}</p><p className="mt-2 text-xl font-bold text-slate-900">{value}</p></Card>
 const csvDownload = (headers, rows, filename) => { const csv = [headers, ...rows].map(row => row.map(v => `"${String(v ?? '').replaceAll('"', '""')}"`).join(',')).join('\r\n'); const url = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' })); const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url) }
+const getDefaultDateRange = () => { const now = new Date(); return { fecha_inicio: new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0, 10), fecha_fin: now.toISOString().slice(0, 10) } }
 
 export const ReportsPage = () => {
   const section = useLocation().pathname.split('/').at(-1)
   const title = ({ sales: 'Ventas por período', inventory: 'Inventario valorizado', profitability: 'Rentabilidad' })[section] || 'Reportes ejecutivos'
   const [data, setData] = useState(null); const [loading, setLoading] = useState(true); const [error, setError] = useState('')
-  const [dates, setDates] = useState(() => { const now = new Date(); return { fecha_inicio: new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0, 10), fecha_fin: now.toISOString().slice(0, 10) } })
-  const load = async (range = dates) => { setLoading(true); setError(''); try { let result
+  const [dates, setDates] = useState(getDefaultDateRange)
+  const load = useCallback(async (range = getDefaultDateRange()) => { setLoading(true); setError(''); try { let result
     if (section === 'sales') result = await reportService.getSalesReport(range)
     else if (section === 'inventory') result = await reportService.getInventoryReport()
     else if (section === 'profitability') { const [sales, inventory] = await Promise.all([reportService.getSalesReport(range), reportService.getInventoryReport()]); result = { sales, inventory } }
     else { const [dashboard, inventory] = await Promise.all([reportService.getDashboard(), reportService.getInventoryReport()]); result = { dashboard, inventory } }
     setData(result)
-  } catch (e) { setError(e.response?.data?.detail || e.message || 'No se pudo cargar el reporte.') } finally { setLoading(false) } }
-  useEffect(() => { load() }, [section])
+  } catch (e) { setError(e.response?.data?.detail || e.message || 'No se pudo cargar el reporte.') } finally { setLoading(false) } }, [section])
+  useEffect(() => { load() }, [load])
   const inventory = section === 'profitability' ? data?.inventory : data?.inventory || data
   const sales = section === 'profitability' ? data?.sales : data
   const exportReport = () => { const saleMode = section === 'sales'; const rows = saleMode ? (sales?.items || []).map(x => [x.fecha, x.numero_comprobante, x.cliente_nombre, x.condicion_pago, x.subtotal, x.igv, x.total, x.utilidad_bruta]) : (inventory?.items || []).map(x => [x.sku, x.nombre, x.categoria, x.stock_actual, x.stock_minimo, x.estado_stock, x.costo_unitario, x.valor_inventario, x.margen_porcentaje]); csvDownload(saleMode ? ['Fecha','Comprobante','Cliente','Pago','Subtotal','IGV','Total','Utilidad bruta'] : ['SKU','Producto','Categoría','Stock','Stock mínimo','Estado','Costo unitario','Valor inventario','Margen %'], rows, `reporte-${section}.csv`) }

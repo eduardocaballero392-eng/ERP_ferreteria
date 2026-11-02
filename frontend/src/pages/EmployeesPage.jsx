@@ -99,21 +99,20 @@ export const EmployeesPage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Empleados</h1>
-          <p className="text-gray-500 mt-1">
-            Gestiona tu equipo de trabajo
-          </p>
+          <p className="text-xs font-bold uppercase tracking-[.16em] text-primary-600">Administración de acceso</p>
+          <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-slate-900">Equipo de trabajo</h1>
+          <p className="mt-1 text-sm text-slate-500">Crea usuarios y asigna el perfil de acceso adecuado.</p>
         </div>
-        <Button onClick={() => setCreateOpen(true)}>
+        <Button onClick={() => setCreateOpen(true)} className="shrink-0">
           <UserPlus className="h-4 w-4" />
-          Nuevo Empleado
+          Nuevo empleado
         </Button>
-      </div>
+      </header>
 
       {/* Estadísticas */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card>
           <div className="flex items-center justify-between">
             <div>
@@ -171,8 +170,8 @@ export const EmployeesPage = () => {
         </Card>
       </div>
 
-      <Card>
-        <div className="mb-4 flex items-center gap-4">
+      <Card className="overflow-hidden p-0">
+        <div className="flex flex-wrap items-center gap-4 border-b border-slate-100 bg-slate-50/60 px-5 py-4">
           <SearchBar
             value={searchTerm}
             onChange={setSearchTerm}
@@ -180,7 +179,7 @@ export const EmployeesPage = () => {
             className="flex-1"
           />
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setFilter('todos')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${

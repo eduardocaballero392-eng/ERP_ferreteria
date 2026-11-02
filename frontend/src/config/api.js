@@ -7,7 +7,7 @@ export const API_CONFIG = {
   // En producción, VITE_API_URL apunta directamente al servicio del backend.
   BASE_URL: import.meta.env.DEV
     ? ''
-    : (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/+$/, ''),
+    : (import.meta.env.VITE_API_URL || 'https://erp-ferreteria-kjzf.onrender.com').replace(/\/+$/, ''),
   API_VERSION: '/api/v1',
   TIMEOUT: 30000,
 }

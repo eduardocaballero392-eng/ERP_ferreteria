@@ -226,17 +226,19 @@ export const Sidebar = ({ isOpen, onClose }) => {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 lg:hidden">
-          <h2 className="text-lg font-semibold text-gray-900">Menú</h2>
+        <div className="flex items-center justify-between border-b border-white/10 p-4 lg:hidden">
+          <div><p className="text-sm font-bold text-white">ERP Ferretería</p><p className="mt-0.5 text-[10px] font-semibold uppercase tracking-[.14em] text-slate-500">Navegación</p></div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100"
+            className="rounded-lg p-2 text-slate-300 transition hover:bg-white/10 hover:text-white"
+            aria-label="Cerrar menú de navegación"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <nav className="space-y-1 px-3 py-5">
+        <nav aria-label="Navegación principal" className="space-y-1 px-3 py-5">
+          <p className="mb-3 px-3.5 text-[10px] font-bold uppercase tracking-[.18em] text-slate-600">Menú principal</p>
           {navigation.map((item) => (
             <div key={item.name}>
               {/* Item sin submenú */}
@@ -291,6 +293,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
                         <NavLink
                           key={subItem.name}
                           to={subItem.href}
+                          end
                           onClick={onClose}
                           className={({ isActive }) =>
                             clsx(
@@ -305,7 +308,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
                           <div className="flex-1 min-w-0">
                             <div className="font-medium">{subItem.name}</div>
                             {subItem.description && (
-                              <div className="mt-0.5 text-[11px] leading-4 text-slate-600 group-hover:text-slate-400">
+                              <div className="mt-0.5 text-[11px] leading-4 text-slate-500 group-hover:text-slate-400">
                                 {subItem.description}
                               </div>
                             )}

@@ -57,13 +57,13 @@ Los nuevos productos y categorías se registran desde Inventario. Haz copias de 
 La configuración está preparada en `render.yaml` y `frontend/vercel.json`.
 
 1. Sube el repositorio a GitHub.
-2. En Render, crea un **Blueprint** desde el repositorio usando `render.yaml`. El blueprint despliega la API y monta un disco en `/var/data` para conservar los CSV modificados entre reinicios y despliegues. El disco persistente requiere un plan de servicio de pago en Render.
+2. En Render, crea un **Blueprint** desde el repositorio usando `render.yaml`. El backend guarda sus CSV en `/tmp/erp-ferreteria-data` y no necesita un disco persistente. Los archivos de esa carpeta son temporales: Render puede borrarlos al reiniciar o desplegar el servicio.
 3. En Vercel, importa el mismo repositorio y establece **Root Directory** en `frontend`. Vercel detectará Vite; `frontend/vercel.json` permite abrir directamente rutas internas como `/inventory`.
-4. En Vercel, define `VITE_API_URL` con la URL HTTPS del servicio Render, por ejemplo `https://erp-ferreteria-api.onrender.com`, sin añadir `/api/v1`, y vuelve a desplegar.
+4. En Vercel, define `VITE_API_URL` con la URL HTTPS del servicio Render, por ejemplo `https://erp-ferreteria-kjzf.onrender.com`, sin añadir `/api/v1`, y vuelve a desplegar.
 5. En Render, cambia `ALLOWED_ORIGINS` a la URL exacta de producción de Vercel, por ejemplo `https://mi-ferreteria.vercel.app`. Separa varios dominios con comas. Guarda y redepliega la API.
 6. Ingresa con el usuario inicial `admin` y contraseña `admin123`; cambia la contraseña después de entrar.
 
-Render copia los CSV iniciales al disco persistente la primera vez. Las siguientes ejecuciones conservan los archivos existentes y no los reemplazan. No elimines el disco si necesitas mantener los datos registrados.
+El backend copia los CSV iniciales a la carpeta temporal si están incluidos en el repositorio. Como no hay almacenamiento persistente, los usuarios, productos y transacciones creados en producción no están garantizados entre reinicios o despliegues. Para conservar información comercial, configura almacenamiento persistente o migra el backend a una base de datos antes de usarlo como sistema de registro real.
 
 ## Estructura
 
