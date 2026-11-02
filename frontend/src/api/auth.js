@@ -6,6 +6,16 @@ import apiClient from './client'
 import { API_ENDPOINTS } from '@/config/api'
 
 export const authService = {
+  async getSetupStatus() {
+    const response = await apiClient.get(API_ENDPOINTS.AUTH.SETUP_STATUS)
+    return response.data
+  },
+
+  async setupAdmin(data) {
+    const response = await apiClient.post(API_ENDPOINTS.AUTH.SETUP, data)
+    return response.data
+  },
+
   /**
    * Login con credenciales
    */
@@ -28,6 +38,11 @@ export const authService = {
    */
   async getCurrentUser() {
     const response = await apiClient.get(API_ENDPOINTS.AUTH.ME)
+    return response.data
+  },
+
+  async register(data) {
+    const response = await apiClient.post(API_ENDPOINTS.AUTH.REGISTER, data)
     return response.data
   },
 

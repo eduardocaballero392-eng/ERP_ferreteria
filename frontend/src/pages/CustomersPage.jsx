@@ -76,14 +76,14 @@ export const CustomersPage = () => {
   const handleEdit = (customer) => {
     setEditingCustomer(customer)
     setFormData({
-      tipo_documento: customer.tipo_documento,
-      numero_documento: customer.numero_documento,
-      nombres: customer.nombres,
-      apellidos: customer.apellidos || '',
-      telefono: customer.telefono || '',
-      email: customer.email || '',
-      direccion: customer.direccion || '',
-      limite_credito: customer.limite_credito || 0,
+      tipo_documento: customer.tipo_documento ?? 'DNI',
+      numero_documento: customer.numero_documento ?? '',
+      nombres: customer.nombres ?? customer.razon_social ?? '',
+      apellidos: customer.apellidos ?? '',
+      telefono: customer.telefono ?? '',
+      email: customer.email ?? '',
+      direccion: customer.direccion ?? '',
+      limite_credito: customer.limite_credito ?? 0,
     })
     setShowModal(true)
   }
@@ -115,10 +115,11 @@ export const CustomersPage = () => {
   }
 
   const filteredCustomers = customers.filter(
-    (customer) =>
-      customer.nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (customer.apellidos?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-      customer.numero_documento.includes(searchTerm)
+    (customer) => {
+      const query = searchTerm.trim().toLowerCase()
+      return [customer.nombres, customer.apellidos, customer.numero_documento]
+        .some((value) => String(value ?? '').toLowerCase().includes(query))
+    }
   )
 
   if (loading) {
@@ -188,13 +189,13 @@ export const CustomersPage = () => {
                           {customer.tipo_documento}
                         </div>
                         <div className="text-gray-500">
-                          {customer.numero_documento}
+                      {formatDocument(customer.tipo_documento, customer.numero_documento)}
                         </div>
                       </div>
                     </td>
                     <td>
                       <div className="font-medium">
-                        {customer.nombres} {customer.apellidos}
+                          {[customer.nombres, customer.apellidos].filter(Boolean).join(' ') || customer.razon_social || customer.nombre_comercial || '—'}
                       </div>
                     </td>
                     <td>
@@ -213,12 +214,12 @@ export const CustomersPage = () => {
                     <td>
                       <Badge
                         variant={
-                          customer.credito_disponible > 0
+                          customer.disponible_credito > 0
                             ? 'success'
                             : 'warning'
                         }
                       >
-                        {formatCurrency(customer.credito_disponible)}
+                        {formatCurrency(customer.disponible_credito)}
                       </Badge>
                     </td>
                     <td className="font-medium">

@@ -11,6 +11,7 @@ export const Input = ({
   type = 'text',
   className,
   required,
+  value,
   ...props
 }) => {
   return (
@@ -23,6 +24,7 @@ export const Input = ({
       )}
       <input
         type={type}
+        value={value ?? ''}
         className={clsx(
           'input',
           error && 'border-red-500 focus:ring-red-500',

@@ -12,6 +12,7 @@ export const Select = ({
   placeholder = 'Seleccionar...',
   className,
   required,
+  value,
   ...props
 }) => {
   return (
@@ -23,6 +24,7 @@ export const Select = ({
         </label>
       )}
       <select
+        value={value ?? ''}
         className={clsx(
           'input',
           error && 'border-red-500 focus:ring-red-500',

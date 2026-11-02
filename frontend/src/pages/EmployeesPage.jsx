@@ -13,12 +13,18 @@ import {
 } from '@/components/common'
 import { Users, UserPlus, TrendingUp, Package, ShoppingBag } from 'lucide-react'
 import { formatCurrency } from '@/utils'
+import { Modal } from '@/components/common'
+import { authService } from '@/api'
+import toast from 'react-hot-toast'
 
 export const EmployeesPage = () => {
   const [employees, setEmployees] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [filter, setFilter] = useState('todos') // todos, vendedor, almacenero
+  const [createOpen, setCreateOpen] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', password: '', role: 'vendedor' })
 
   useEffect(() => {
     loadEmployees()
@@ -26,41 +32,36 @@ export const EmployeesPage = () => {
 
   const loadEmployees = async () => {
     try {
-      // Simulación de datos - aquí llamarías a tu API
-      const mockData = [
-        {
-          id: 1,
-          nombre_completo: 'María Rodríguez',
-          role: 'vendedor',
-          email: 'vendedor@ferreteria.com',
-          telefono: '987654321',
-          activo: true,
-          estadisticas: {
-            ventas_mes: 15,
-            monto_vendido: 45000,
-            clientes_atendidos: 12,
-          },
-        },
-        {
-          id: 2,
-          nombre_completo: 'José Torres',
-          role: 'almacenero',
-          email: 'almacen@ferreteria.com',
-          telefono: '987654322',
-          activo: true,
-          estadisticas: {
-            compras_mes: 8,
-            monto_compras: 25000,
-            productos_gestionados: 53,
-          },
-        },
-      ]
-      setEmployees(mockData)
+      // El backend permite registrar usuarios, pero aún no ofrece un endpoint de listado.
+      setEmployees([])
     } catch (error) {
       console.error('Error al cargar empleados:', error)
     } finally {
       setLoading(false)
     }
+  }
+
+  const createEmployee = async (event) => {
+    event.preventDefault()
+    setSaving(true)
+    try {
+      const created = await authService.register(form)
+      const role = created.role || form.role
+      setEmployees((current) => [{
+        ...created,
+        nombre_completo: created.nombre_completo || `${created.nombre} ${created.apellido}`,
+        role,
+        activo: created.activo ?? true,
+        estadisticas: role === 'vendedor'
+          ? { ventas_mes: 0, monto_vendido: 0, clientes_atendidos: 0 }
+          : { compras_mes: 0, monto_compras: 0, productos_gestionados: 0 },
+      }, ...current])
+      setForm({ nombre: '', apellido: '', email: '', password: '', role: 'vendedor' })
+      setCreateOpen(false)
+      toast.success('Usuario creado correctamente')
+    } catch (error) {
+      toast.error(error.response?.data?.detail || error.message || 'No se pudo crear el usuario')
+    } finally { setSaving(false) }
   }
 
   const getRoleBadge = (role) => {
@@ -105,7 +106,7 @@ export const EmployeesPage = () => {
             Gestiona tu equipo de trabajo
           </p>
         </div>
-        <Button>
+        <Button onClick={() => setCreateOpen(true)}>
           <UserPlus className="h-4 w-4" />
           Nuevo Empleado
         </Button>
@@ -310,6 +311,16 @@ export const EmployeesPage = () => {
           </div>
         )}
       </Card>
+      <Modal isOpen={createOpen} onClose={() => setCreateOpen(false)} title="Nuevo empleado" size="md">
+        <form onSubmit={createEmployee} className="grid gap-4 sm:grid-cols-2">
+          <label className="label">Nombre<input className="input mt-1" required minLength="2" value={form.nombre} onChange={(event) => setForm({ ...form, nombre: event.target.value })} /></label>
+          <label className="label">Apellido<input className="input mt-1" required minLength="2" value={form.apellido} onChange={(event) => setForm({ ...form, apellido: event.target.value })} /></label>
+          <label className="label sm:col-span-2">Correo electrónico<input className="input mt-1" type="email" required value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} /></label>
+          <label className="label sm:col-span-2">Contraseña inicial<input className="input mt-1" type="password" minLength="6" required value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} /></label>
+          <label className="label sm:col-span-2">Rol<select className="input mt-1" value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })}><option value="vendedor">Vendedor</option><option value="almacenero">Almacenero</option></select></label>
+          <div className="sm:col-span-2"><Button type="submit" loading={saving}>Crear usuario</Button></div>
+        </form>
+      </Modal>
     </div>
   )
 }

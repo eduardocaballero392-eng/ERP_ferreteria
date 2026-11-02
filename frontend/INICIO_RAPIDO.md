@@ -27,7 +27,8 @@ npm install
 copy .env.example .env
 
 # Editar .env y configurar:
-VITE_API_URL=http://localhost:8000
+# En desarrollo, Vite usa el proxy hacia http://localhost:8000.
+# VITE_API_URL solo se configura para producción, con la URL pública del backend.
 ```
 
 ### 4. Iniciar servidor de desarrollo

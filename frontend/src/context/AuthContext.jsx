@@ -3,18 +3,9 @@
  * Maneja el estado de autenticación del usuario
  */
 
-import { createContext, useContext, useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { authService } from '@/api'
-
-const AuthContext = createContext(null)
-
-export const useAuth = () => {
-  const context = useContext(AuthContext)
-  if (!context) {
-    throw new Error('useAuth debe ser usado dentro de un AuthProvider')
-  }
-  return context
-}
+import { AuthContext } from './auth-context'
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
@@ -22,11 +13,13 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   // Verificar si hay sesión al cargar
-  useEffect(() => {
-    checkAuth()
+  const logout = useCallback(() => {
+    authService.logout()
+    setUser(null)
+    setIsAuthenticated(false)
   }, [])
 
-  const checkAuth = async () => {
+  const checkAuth = useCallback(async () => {
     try {
       const token = localStorage.getItem('token')
       if (token) {
@@ -40,7 +33,11 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [logout])
+
+  useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
 
   const login = async (username, password) => {
     try {
@@ -64,17 +61,12 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const logout = () => {
-    authService.logout()
-    setUser(null)
-    setIsAuthenticated(false)
-  }
-
   const hasPermission = (permission) => {
     if (!user) return false
+    const role = user.role ?? user.rol
     
     // Admin tiene todos los permisos
-    if (user.rol === 'admin') return true
+    if (role === 'admin') return true
     
     // Verificar permisos específicos por rol
     const permissions = {
@@ -82,7 +74,7 @@ export const AuthProvider = ({ children }) => {
       almacenero: ['inventory', 'purchases', 'suppliers', 'reports'],
     }
     
-    return permissions[user.rol]?.includes(permission) || false
+    return permissions[role]?.includes(permission) || false
   }
 
   const value = {

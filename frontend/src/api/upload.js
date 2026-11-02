@@ -5,19 +5,11 @@
 import apiClient from './client'
 
 export const uploadService = {
-  /**
-   * Carga un archivo CSV
-   */
-  async uploadCSV(file, entity) {
+  async uploadStock(file) {
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('entity', entity)
 
-    const response = await apiClient.post('/upload/csv', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
+    const response = await apiClient.post('/upload/stock', formData)
     return response.data
   },
 }

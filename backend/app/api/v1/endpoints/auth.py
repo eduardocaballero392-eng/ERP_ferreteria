@@ -17,15 +17,22 @@ from app.security.dependencies import get_current_active_user, require_role
 router = APIRouter()
 
 
+@router.get("/setup-status", summary="Verificar configuración inicial")
+async def get_setup_status():
+    return {"setup_required": auth_service.setup_required()}
+
+
+@router.post("/setup", response_model=UserResponse, status_code=status.HTTP_201_CREATED, summary="Crear el primer administrador")
+async def setup_first_admin(user_data: UserCreate):
+    return auth_service.setup_first_admin(user_data)
+
+
 @router.post("/login", response_model=Token, summary="Iniciar sesión")
 async def login(login_data: LoginRequest):
     """
     Inicia sesión y genera un token JWT
     
-    **Credenciales de prueba:**
-    - Admin: admin@ferreteria.com / admin123
-    - Vendedor: vendedor@ferreteria.com / vend123
-    - Almacenero: almacen@ferreteria.com / alm123
+    **Cuenta inicial:** admin / admin123
     
     **Returns:**
     - Token JWT para usar en el header Authorization: Bearer {token}
@@ -38,10 +45,7 @@ async def login_form(form_data: OAuth2PasswordRequestForm = Depends()):
     """
     Iniciar sesión usando OAuth2PasswordRequestForm (compatible con Swagger UI)
     
-    **Credenciales de prueba:**
-    - Usuario: admin, Password: admin123
-    - Usuario: vendedor, Password: vendedor123
-    - Usuario: almacenero, Password: almacenero123
+    **Cuenta inicial:** admin / admin123
     """
     # Usar username directamente en lugar de email
     return auth_service.login_with_username(form_data.username, form_data.password)

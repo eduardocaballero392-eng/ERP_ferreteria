@@ -16,6 +16,44 @@ class AuthService:
     
     def __init__(self):
         self.user_repo = user_repository
+
+    def ensure_default_admin(self) -> None:
+        """Crea el usuario inicial solo cuando el CSV de usuarios está vacío."""
+        if self.user_repo.find_all():
+            return
+
+        now = datetime.now().isoformat()
+        self.user_repo.create({
+            "username": "admin",
+            "email": "admin@ferreteria.com",
+            "nombre": "Administrador",
+            "apellido": "Sistema",
+            "password_hash": get_password_hash("admin123"),
+            "role": "admin",
+            "activo": True,
+            "created_at": now,
+            "updated_at": now,
+        })
+
+    def setup_required(self) -> bool:
+        """Indica si aún no existe un usuario activo para iniciar el ERP."""
+        return len(self.user_repo.find_all()) == 0
+
+    def setup_first_admin(self, user_data: UserCreate) -> UserResponse:
+        """Crea el primer administrador sin habilitar registros públicos posteriores."""
+        if not self.setup_required():
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="El sistema ya tiene un administrador configurado")
+        admin_data = user_data.model_copy(update={"role": "admin"})
+        payload = admin_data.model_dump(exclude={"password"})
+        payload["password_hash"] = get_password_hash(admin_data.password)
+        payload["username"] = admin_data.email
+        payload["activo"] = True
+        payload["created_at"] = datetime.now().isoformat()
+        payload["updated_at"] = payload["created_at"]
+        try:
+            return UserResponse(**self.user_repo.create(payload))
+        except ValueError as error:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(error))
     
     def login(self, login_data: LoginRequest) -> Token:
         """

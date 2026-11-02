@@ -104,6 +104,9 @@ class SaleService:
         
         sale_with_details = {
             **sale,
+            # Legacy sales rows store this as "condicion"; the API schema
+            # exposes it consistently as "condicion_pago".
+            'condicion_pago': sale.get('condicion_pago') or sale.get('condicion') or 'CONTADO',
             'cliente_nombre': cliente_nombre,
             'cliente_documento': customer.get('numero_documento') if customer else None,
             'detalles': detail_responses

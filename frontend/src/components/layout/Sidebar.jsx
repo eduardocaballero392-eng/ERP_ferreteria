@@ -2,8 +2,8 @@
  * Sidebar con navegación y submenús desplegables
  */
 
-import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 import { clsx } from 'clsx'
 import {
   LayoutDashboard,
@@ -29,7 +29,19 @@ import {
 } from 'lucide-react'
 
 export const Sidebar = ({ isOpen, onClose }) => {
+  const location = useLocation()
   const [openMenus, setOpenMenus] = useState({})
+
+  useEffect(() => {
+    setOpenMenus((current) => ({
+      ...current,
+      Inventario: location.pathname.startsWith('/inventory'),
+      Ventas: location.pathname.startsWith('/sales'),
+      Compras: location.pathname.startsWith('/purchases'),
+      Empleados: location.pathname.startsWith('/employees'),
+      Reportes: location.pathname.startsWith('/reports'),
+    }))
+  }, [location.pathname])
 
   const toggleMenu = (menuName) => {
     setOpenMenus(prev => ({
@@ -98,10 +110,10 @@ export const Sidebar = ({ isOpen, onClose }) => {
           description: 'Gestionar cotizaciones'
         },
         {
-          name: 'Cuentas por Cobrar',
+          name: 'Ventas a Crédito',
           href: '/sales/receivables',
           icon: DollarSign,
-          description: 'Créditos pendientes'
+          description: 'Ventas registradas a crédito'
         },
       ]
     },
@@ -271,7 +283,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
                   <div
                     className={clsx(
                       'overflow-hidden transition-all duration-200',
-                      openMenus[item.name] ? 'max-h-96 mt-1' : 'max-h-0'
+                      openMenus[item.name] ? 'max-h-[36rem] mt-1' : 'max-h-0'
                     )}
                   >
                     <div className="ml-4 space-y-1 border-l-2 border-gray-200 pl-2">

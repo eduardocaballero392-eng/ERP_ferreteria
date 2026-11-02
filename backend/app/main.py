@@ -3,7 +3,7 @@ FastAPI Application - Main Entry Point
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.core.config import settings
+from app.core.config import get_allowed_origins, settings
 
 # Crear instancia de FastAPI
 app = FastAPI(
@@ -18,7 +18,7 @@ app = FastAPI(
 # Configurar CORS - Permitir todos los orígenes en desarrollo
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # En producción cambiar a dominios específicos
+    allow_origins=get_allowed_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -48,6 +48,13 @@ async def health_check():
 # Importar y registrar routers de la API
 from app.api.v1.router import api_router
 app.include_router(api_router, prefix="/api/v1")
+
+
+@app.on_event("startup")
+async def provision_default_admin():
+    """Asegura la cuenta inicial en cada entorno con almacenamiento persistente."""
+    from app.services.auth_service import auth_service
+    auth_service.ensure_default_admin()
 
 
 if __name__ == "__main__":

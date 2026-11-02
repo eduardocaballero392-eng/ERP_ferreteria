@@ -1,4 +1,4 @@
-id,username,email,nombre,apellido,password_hash,role,activo,created_at,updated_at,nombre_completo
-1,admin,admin@ferreteria.com,Carlos,Mendoza,$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW,admin,True,2026-10-01 08:00:00,2026-10-01 08:00:00,Carlos Mendoza
-2,vendedor,vendedor@ferreteria.com,María,Rodríguez,$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW,vendedor,True,2026-10-01 08:00:00,2026-10-01 08:00:00,María Rodríguez
-3,almacenero,almacen@ferreteria.com,José,Torres,$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW,almacenero,True,2026-10-01 08:00:00,2026-10-01 08:00:00,José Torres
+﻿id,username,email,nombre,apellido,password_hash,role,activo,created_at,updated_at,nombre_completo
+1,admin,admin@ferreteria.com,Carlos,Mendoza,$2b$12$psML8fTARQ1iIA/gb8NFK.MLmsJsf0XVCbgJ3BD8v2D0UP0o6kSTq,admin,True,2026-10-01 08:00:00,2026-10-01 08:00:00,Carlos Mendoza
+2,vendedor,vendedor@ferreteria.com,María,Rodríguez,$2b$12$QOMMAit/qKRwsd6mlI8MJuWeNrPvuBfQ2snIu6FcCP9hOdpVPU31u,vendedor,True,2026-10-01 08:00:00,2026-10-01 08:00:00,María Rodríguez
+3,almacenero,almacen@ferreteria.com,José,Torres,$2b$12$pOB2vBPeMLyuIohYVSy55eqpwIpWh9R8Rc69j4fLsh3yLu21Yrk5S,almacenero,True,2026-10-01 08:00:00,2026-10-01 08:00:00,José Torres

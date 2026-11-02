@@ -17,7 +17,7 @@ export const SearchBar = ({
       </div>
       <input
         type="text"
-        value={value}
+        value={value ?? ''}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         className="input pl-10"
