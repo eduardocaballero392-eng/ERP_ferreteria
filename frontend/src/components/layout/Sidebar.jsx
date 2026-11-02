@@ -221,8 +221,8 @@ export const Sidebar = ({ isOpen, onClose }) => {
       {/* Sidebar */}
       <aside
         className={clsx(
-          'fixed top-0 left-0 z-30 h-full w-64 bg-white border-r border-gray-200 transition-transform duration-300 ease-in-out overflow-y-auto',
-          'lg:translate-x-0 lg:top-16',
+          'fixed top-0 left-0 z-30 h-full w-64 overflow-y-auto border-r border-slate-800 bg-[#111b2e] text-slate-200 transition-transform duration-300 ease-in-out',
+          'lg:translate-x-0 lg:top-16 lg:h-[calc(100vh-4rem)]',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
@@ -236,7 +236,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        <nav className="p-4 space-y-1">
+        <nav className="space-y-1 px-3 py-5">
           {navigation.map((item) => (
             <div key={item.name}>
               {/* Item sin submenú */}
@@ -246,10 +246,10 @@ export const Sidebar = ({ isOpen, onClose }) => {
                   onClick={onClose}
                   className={({ isActive }) =>
                     clsx(
-                      'flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors',
+                      'flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold transition-all',
                       isActive
-                        ? 'bg-primary-50 text-primary-700'
-                        : 'text-gray-700 hover:bg-gray-100'
+                        ? 'bg-blue-500/15 text-blue-200 ring-1 ring-inset ring-blue-400/10'
+                        : 'text-slate-400 hover:bg-white/[.06] hover:text-white'
                     )
                   }
                 >
@@ -262,10 +262,10 @@ export const Sidebar = ({ isOpen, onClose }) => {
                   <button
                     onClick={() => toggleMenu(item.name)}
                     className={clsx(
-                      'flex items-center justify-between w-full gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors',
+                      'flex w-full items-center justify-between gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold transition-all',
                       openMenus[item.name]
-                        ? 'bg-gray-100 text-gray-900'
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-white/[.07] text-white'
+                        : 'text-slate-400 hover:bg-white/[.05] hover:text-white'
                     )}
                   >
                     <div className="flex items-center gap-3">
@@ -286,7 +286,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
                       openMenus[item.name] ? 'max-h-[36rem] mt-1' : 'max-h-0'
                     )}
                   >
-                    <div className="ml-4 space-y-1 border-l-2 border-gray-200 pl-2">
+                    <div className="ml-4 space-y-1 border-l border-white/10 pl-2">
                       {item.subItems.map((subItem) => (
                         <NavLink
                           key={subItem.name}
@@ -294,10 +294,10 @@ export const Sidebar = ({ isOpen, onClose }) => {
                           onClick={onClose}
                           className={({ isActive }) =>
                             clsx(
-                              'flex items-start gap-3 px-3 py-2 rounded-lg text-sm transition-colors group',
+                              'group flex items-start gap-3 rounded-lg px-3 py-2.5 text-[13px] transition-all',
                               isActive
-                                ? 'bg-primary-50 text-primary-700'
-                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                ? 'bg-blue-500/15 font-semibold text-blue-200'
+                                : 'text-slate-500 hover:bg-white/[.05] hover:text-slate-100'
                             )
                           }
                         >
@@ -305,7 +305,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
                           <div className="flex-1 min-w-0">
                             <div className="font-medium">{subItem.name}</div>
                             {subItem.description && (
-                              <div className="text-xs text-gray-500 mt-0.5">
+                              <div className="mt-0.5 text-[11px] leading-4 text-slate-600 group-hover:text-slate-400">
                                 {subItem.description}
                               </div>
                             )}

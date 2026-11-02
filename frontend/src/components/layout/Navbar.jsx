@@ -41,7 +41,7 @@ export const Navbar = ({ onMenuClick }) => {
   }
 
   return (
-    <nav className="bg-white border-b border-gray-200 fixed w-full z-30 top-0">
+    <nav className="bg-white/95 border-b border-slate-200/80 fixed w-full z-30 top-0 backdrop-blur-xl shadow-[0_2px_12px_rgba(15,23,42,0.04)]">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo y menú hamburguesa */}
@@ -53,9 +53,7 @@ export const Navbar = ({ onMenuClick }) => {
               <Menu className="h-6 w-6" />
             </button>
             <div className="flex items-center ml-4">
-              <h1 className="text-xl font-bold text-primary-600">
-                ERP Ferretería
-              </h1>
+              <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-sm font-extrabold tracking-tight text-white shadow-lg shadow-blue-900/20">EF</div><div><h1 className="text-[15px] font-extrabold leading-tight tracking-tight text-slate-900">ERP Ferretería</h1><p className="mt-0.5 text-[10px] font-bold uppercase tracking-[.16em] text-slate-400">Gestión integrada</p></div></div>
             </div>
           </div>
 
@@ -73,7 +71,7 @@ export const Navbar = ({ onMenuClick }) => {
             <div className="relative">
               <button
                 onClick={() => setShowDropdown(!showDropdown)}
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-primary-600 text-white font-medium hover:bg-primary-700"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-indigo-700 font-bold text-white shadow-md shadow-primary-900/15 transition hover:-translate-y-0.5"
               >
                 {getInitials(user?.nombre_completo || 'Usuario')}
               </button>

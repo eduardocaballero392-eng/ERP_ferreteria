@@ -8,16 +8,12 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
-    disk:
-      name: erp-ferreteria-data
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: DEBUG
         value: "false"
       - key: SECRET_KEY
         generateValue: true
       - key: DATA_DIR
-        value: /var/data
+        value: /tmp/erp-ferreteria-data
       - key: ALLOWED_ORIGINS
         value: https://your-project.vercel.app
