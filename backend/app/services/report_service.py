@@ -541,6 +541,97 @@ class ReportService:
         }
         
         return self.audit_handler.append(log_data)
+    
+    def get_recent_activity(self, limit: int = 10):
+        """Obtiene actividad reciente del sistema"""
+        import math
+        
+        activities = []
+        
+        # Obtener últimas ventas
+        sales = self.sale_repo.find_all()
+        for sale in sorted(sales, key=lambda x: x.get('created_at', ''), reverse=True)[:limit]:
+            customer = self.customer_repo.find_by_id(sale.get('cliente_id'))
+            
+            # Nombre del cliente
+            if customer:
+                razon_social = customer.get('razon_social')
+                nombre = customer.get('nombre')
+                apellido = customer.get('apellido')
+                
+                # Manejar NaN
+                if razon_social and not (isinstance(razon_social, float) and math.isnan(razon_social)):
+                    cliente_nombre = str(razon_social)
+                elif nombre or apellido:
+                    nombre_str = str(nombre) if nombre and not (isinstance(nombre, float) and math.isnan(nombre)) else ''
+                    apellido_str = str(apellido) if apellido and not (isinstance(apellido, float) and math.isnan(apellido)) else ''
+                    cliente_nombre = f"{nombre_str} {apellido_str}".strip() or "Cliente"
+                else:
+                    cliente_nombre = "Cliente"
+            else:
+                cliente_nombre = "Cliente"
+            
+            # Calcular tiempo relativo
+            created_at = sale.get('created_at')
+            time_ago = self._get_time_ago(created_at)
+            
+            activities.append({
+                'id': f"sale_{sale['id']}",
+                'type': 'sale',
+                'icon': 'ShoppingBag',
+                'title': f"{cliente_nombre} realizó una compra",
+                'description': f"Venta {sale.get('numero_comprobante')} por S/ {sale.get('total', 0):.2f}",
+                'time': time_ago,
+                'timestamp': created_at,
+                'color': 'emerald'
+            })
+        
+        # Obtener últimas compras
+        purchases = self.purchase_repo.find_all()
+        for purchase in sorted(purchases, key=lambda x: x.get('created_at', ''), reverse=True)[:5]:
+            supplier = self.supplier_repo.find_by_id(purchase.get('proveedor_id'))
+            supplier_name = supplier.get('razon_social') if supplier else 'Proveedor'
+            
+            created_at = purchase.get('created_at')
+            time_ago = self._get_time_ago(created_at)
+            
+            activities.append({
+                'id': f"purchase_{purchase['id']}",
+                'type': 'purchase',
+                'icon': 'ShoppingCart',
+                'title': f"Compra recibida de {supplier_name}",
+                'description': f"Orden {purchase.get('numero_orden')} por S/ {purchase.get('total', 0):.2f}",
+                'time': time_ago,
+                'timestamp': created_at,
+                'color': 'blue'
+            })
+        
+        # Ordenar por timestamp y limitar
+        activities.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
+        return activities[:limit]
+    
+    def _get_time_ago(self, timestamp_str: str) -> str:
+        """Calcula tiempo relativo (hace X minutos/horas/días)"""
+        try:
+            timestamp = datetime.fromisoformat(timestamp_str)
+            now = datetime.now()
+            diff = now - timestamp
+            
+            seconds = diff.total_seconds()
+            
+            if seconds < 60:
+                return "hace unos segundos"
+            elif seconds < 3600:
+                minutes = int(seconds / 60)
+                return f"hace {minutes} min" if minutes == 1 else f"hace {minutes} min"
+            elif seconds < 86400:
+                hours = int(seconds / 3600)
+                return f"hace {hours} hora" if hours == 1 else f"hace {hours} horas"
+            else:
+                days = int(seconds / 86400)
+                return f"hace {days} día" if days == 1 else f"hace {days} días"
+        except:
+            return "recientemente"
 
 
 # Singleton

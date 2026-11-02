@@ -69,6 +69,59 @@ class AuthService:
         
         return Token(access_token=access_token, token_type="bearer")
     
+    def login_with_username(self, username: str, password: str) -> Token:
+        """
+        Autentica un usuario usando username y genera un token JWT
+        
+        Args:
+            username: Nombre de usuario
+            password: Contraseña
+        
+        Returns:
+            Token JWT
+        
+        Raises:
+            HTTPException: Si las credenciales son inválidas
+        """
+        # Buscar usuario por username
+        user = self.user_repo.find_by_username(username)
+        
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Usuario o contraseña incorrectos",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        
+        # Verificar que el usuario esté activo
+        if not user.get('activo') in [True, 'True', '1', 1]:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Usuario inactivo",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        
+        # Verificar contraseña
+        if not verify_password(password, user.get('password_hash')):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Usuario o contraseña incorrectos",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        
+        # Crear token JWT
+        access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token = create_access_token(
+            data={
+                "sub": user.get('email'),
+                "user_id": user.get('id'),
+                "role": user.get('role')
+            },
+            expires_delta=access_token_expires
+        )
+        
+        return Token(access_token=access_token, token_type="bearer")
+    
     def register(self, user_data: UserCreate) -> UserResponse:
         """
         Registra un nuevo usuario

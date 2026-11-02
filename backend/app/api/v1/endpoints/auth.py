@@ -39,12 +39,12 @@ async def login_form(form_data: OAuth2PasswordRequestForm = Depends()):
     Iniciar sesión usando OAuth2PasswordRequestForm (compatible con Swagger UI)
     
     **Credenciales de prueba:**
-    - Usuario: admin@ferreteria.com, Password: admin123
-    - Usuario: vendedor@ferreteria.com, Password: vend123
-    - Usuario: almacen@ferreteria.com, Password: alm123
+    - Usuario: admin, Password: admin123
+    - Usuario: vendedor, Password: vendedor123
+    - Usuario: almacenero, Password: almacenero123
     """
-    login_data = LoginRequest(email=form_data.username, password=form_data.password)
-    return auth_service.login(login_data)
+    # Usar username directamente en lugar de email
+    return auth_service.login_with_username(form_data.username, form_data.password)
 
 
 @router.post(

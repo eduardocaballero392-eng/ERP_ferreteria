@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     
     # Data Storage (CSV files)
-    DATA_DIR: Path = Path("data")
+    DATA_DIR: Path = Path(__file__).parent.parent.parent / "data"
     
     # Security
     SECRET_KEY: str = "change-this-secret-key-in-production"
@@ -23,7 +23,12 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
     # CORS
-    CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:5173"]
+    CORS_ORIGINS: List[str] = [
+        "http://localhost:3000",
+        "http://localhost:3001", 
+        "http://localhost:3002",
+        "http://localhost:5173"
+    ]
     
     # AWS (opcional para producción)
     AWS_REGION: str = "us-east-1"

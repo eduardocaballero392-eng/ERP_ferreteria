@@ -11,6 +11,16 @@ export const reportService = {
    */
   async getDashboard(params = {}) {
     const response = await apiClient.get(API_ENDPOINTS.REPORTS.DASHBOARD, { params })
+    
+    // Obtener actividad reciente
+    try {
+      const activityResponse = await apiClient.get('/reports/recent-activity')
+      response.data.recent_activity = activityResponse.data
+    } catch (error) {
+      console.error('Error loading recent activity:', error)
+      response.data.recent_activity = []
+    }
+    
     return response.data
   },
 

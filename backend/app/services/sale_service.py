@@ -33,18 +33,33 @@ class SaleService:
             customer = self.customer_repo.find_by_id(sale['cliente_id'])
             
             # Nombre del cliente
-            if customer:
-                if customer.get('razon_social'):
-                    cliente_nombre = customer.get('razon_social')
-                else:
-                    cliente_nombre = f"{customer.get('nombres', '')} {customer.get('apellidos', '')}".strip()
-            else:
-                cliente_nombre = None
+            cliente_nombre = "Cliente Desconocido"
+            cliente_documento = None
             
+            if customer:
+                # Manejar pandas NaN - convertir a None
+                razon_social = customer.get('razon_social')
+                nombre = customer.get('nombre')
+                apellido = customer.get('apellido')
+                
+                # pandas NaN es float, verificar tipo
+                import math
+                if razon_social and not (isinstance(razon_social, float) and math.isnan(razon_social)):
+                    cliente_nombre = str(razon_social)
+                elif nombre or apellido:
+                    nombre_str = str(nombre) if nombre and not (isinstance(nombre, float) and math.isnan(nombre)) else ''
+                    apellido_str = str(apellido) if apellido and not (isinstance(apellido, float) and math.isnan(apellido)) else ''
+                    cliente_nombre = f"{nombre_str} {apellido_str}".strip() or "Cliente Sin Nombre"
+                
+                if customer.get('numero_documento'):
+                    cliente_documento = str(customer.get('numero_documento'))
+            
+            # Mapear condicion -> condicion_pago para compatibilidad
             sale_with_customer = {
                 **sale,
+                'condicion_pago': sale.get('condicion') or sale.get('condicion_pago', 'CONTADO'),
                 'cliente_nombre': cliente_nombre,
-                'cliente_documento': customer.get('numero_documento') if customer else None
+                'cliente_documento': cliente_documento
             }
             result.append(SaleResponse(**sale_with_customer))
         

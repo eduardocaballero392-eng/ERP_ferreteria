@@ -3,7 +3,7 @@ Router principal de API v1
 Aquí se registran todos los endpoints de los módulos
 """
 from fastapi import APIRouter
-from app.api.v1.endpoints import auth, categories, products, suppliers, purchases, customers, sales, reports
+from app.api.v1.endpoints import auth, categories, products, suppliers, purchases, customers, sales, reports, upload
 
 # Crear router principal
 api_router = APIRouter()
@@ -17,6 +17,7 @@ api_router.include_router(purchases.router, prefix="/purchases", tags=["Compras"
 api_router.include_router(customers.router, prefix="/customers", tags=["Clientes"])
 api_router.include_router(sales.router, prefix="/sales", tags=["Ventas"])
 api_router.include_router(reports.router, prefix="/reports", tags=["Reportes y Auditoría"])
+api_router.include_router(upload.router, prefix="/upload", tags=["Carga de Datos"])
 
 # TODO: Importar y registrar otros routers
 # from app.api.v1.endpoints import payments

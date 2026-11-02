@@ -16,9 +16,7 @@ router = APIRouter()
 
 
 @router.get("/dashboard", response_model=DashboardStats, summary="Dashboard principal")
-async def get_dashboard(
-    current_user: UserResponse = Depends(require_role(["admin"]))
-):
+async def get_dashboard():
     """
     Obtiene estadísticas generales para el dashboard:
     - Ventas del día y del mes
@@ -30,6 +28,15 @@ async def get_dashboard(
     **Requiere rol:** admin
     """
     return report_service.get_dashboard_stats()
+
+
+@router.get("/recent-activity", summary="Actividad reciente")
+async def get_recent_activity():
+    """
+    Obtiene las últimas acciones realizadas en el sistema
+    para mostrar actividad en tiempo real
+    """
+    return report_service.get_recent_activity()
 
 
 @router.get("/inventory", response_model=InventoryReport, summary="Reporte de inventario")

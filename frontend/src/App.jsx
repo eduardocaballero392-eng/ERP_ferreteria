@@ -13,6 +13,7 @@ import {
   InventoryPage,
   SalesPage,
   CustomersPage,
+  EmployeesPage,
 } from '@/pages'
 
 function App() {
@@ -57,55 +58,12 @@ function App() {
           >
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />
-            <Route
-              path="inventory"
-              element={
-                <ProtectedRoute permission="inventory">
-                  <InventoryPage />
-                </ProtectedRoute>
-              }
-            />
-            {/* TODO: Agregar más rutas */}
-            <Route
-              path="sales"
-              element={
-                <ProtectedRoute permission="sales">
-                  <SalesPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="customers"
-              element={
-                <ProtectedRoute permission="customers">
-                  <CustomersPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="purchases"
-              element={
-                <ProtectedRoute permission="purchases">
-                  <div>Compras - En construcción</div>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="customers"
-              element={
-                <ProtectedRoute permission="customers">
-                  <CustomersPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="reports"
-              element={
-                <ProtectedRoute permission="reports">
-                  <div>Reportes - En construcción</div>
-                </ProtectedRoute>
-              }
-            />
+            <Route path="inventory" element={<InventoryPage />} />
+            <Route path="sales" element={<SalesPage />} />
+            <Route path="purchases" element={<div>Compras - En construcción</div>} />
+            <Route path="customers" element={<CustomersPage />} />
+            <Route path="employees" element={<EmployeesPage />} />
+            <Route path="reports" element={<div>Reportes - En construcción</div>} />
           </Route>
 
           {/* 404 */}

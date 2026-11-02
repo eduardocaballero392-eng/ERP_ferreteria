@@ -25,6 +25,11 @@ class UserRepository:
         users = self.csv_handler.find_by_field("email", email)
         return users[0] if users else None
     
+    def find_by_username(self, username: str) -> Optional[Dict[str, Any]]:
+        """Busca un usuario por username"""
+        users = self.csv_handler.find_by_field("username", username)
+        return users[0] if users else None
+    
     def create(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
         """Crea un nuevo usuario"""
         # Verificar si el email ya existe

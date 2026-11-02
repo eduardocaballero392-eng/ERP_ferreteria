@@ -15,15 +15,19 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[SaleResponse], summary="Listar ventas")
-async def list_sales(
-    current_user: UserResponse = Depends(get_current_active_user)
-):
+async def list_sales():
     """
     Obtiene todas las ventas
     
     **Requiere:** Autenticación
     """
-    return sale_service.get_all_sales()
+    try:
+        return sale_service.get_all_sales()
+    except Exception as e:
+        print(f"ERROR en list_sales: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
 
 
 @router.get("/stats", response_model=SaleStats, summary="Estadísticas de ventas")

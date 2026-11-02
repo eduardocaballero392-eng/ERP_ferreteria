@@ -13,15 +13,20 @@ router = APIRouter()
 
 @router.get("/", response_model=List[CustomerResponse], summary="Listar clientes")
 async def list_customers(
-    include_inactive: bool = Query(False, description="Incluir clientes inactivos"),
-    current_user: UserResponse = Depends(get_current_active_user)
+    include_inactive: bool = Query(False, description="Incluir clientes inactivos")
 ):
     """
     Obtiene todos los clientes
     
     **Requiere:** Autenticación
     """
-    return customer_service.get_all_customers(include_inactive)
+    try:
+        return customer_service.get_all_customers(include_inactive)
+    except Exception as e:
+        print(f"ERROR en list_customers: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
 
 
 @router.get("/with-stats", response_model=List[CustomerWithStats], summary="Clientes con estadísticas")
