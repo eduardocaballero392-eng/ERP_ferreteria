@@ -59,8 +59,19 @@ apiClient.interceptors.response.use(
           break
           
         case 422:
-          // Errores de validación
-          error.message = data?.detail || 'Error de validación'
+          // FastAPI devuelve los errores de validación como una lista de objetos.
+          // Convertirlos a texto evita que React intente renderizar esos objetos.
+          if (Array.isArray(data?.detail)) {
+            const messages = data.detail.map((item) => {
+              const location = Array.isArray(item.loc)
+                ? item.loc.filter((part) => !['body', 'query', 'path'].includes(part)).join('.')
+                : ''
+              const message = item.msg === 'Field required' ? 'Campo obligatorio' : item.msg
+              return [location, message].filter(Boolean).join(': ')
+            })
+            data.detail = messages.join('. ') || 'Revisa los datos ingresados.'
+          }
+          error.message = typeof data?.detail === 'string' ? data.detail : 'Revisa los datos ingresados.'
           break
           
         case 500:
